@@ -50,7 +50,7 @@ Since you get familiar with those tools, let's talk about our target, Xilinx 7-S
 
 Another question may be raised: Why do we choose this project. The following screenshot from Symbiflow can solve your confusion, showing current progress of each project. Lacking full support to Advanced Tiles considerably simplifies our research and makes us focus on the fundamental structure of FPGA. Once we figure out how logic tiles are organized and optimized, RAM and other advanced tiles will be the next. Additionally, we happen to have a version of Xilinx 7-Series FPGA in the lab, easily to test the output.
 
-![image text](\image\Project_X_Ray.jpg)
+![image text](image/Project_X_Ray.jpg)
 
 ## Terms to Know
 
@@ -62,13 +62,13 @@ Routing Resource Graph (rr graph): An XML file that describes the routing resour
 
 Segments or Wires: Segments or wires are connections between two switches, divided into two types: cardinal and non-cardinal segments. It's easy to tell their difference: with or without turn. Every segment is named with its direction plus a number, representing the number of switch it crosses. For example, WW2 means its direction is west and it crosses 2 switches. Another noticeable segment is stub(in green), which starts from a segment and ends at a switch.
 
-![image text](\image\Segment_Introduction.jpg)
+![image text](image/Segment_Introduction.jpg)
 
 # Roadmap
 
 Let me give you a big view of our project. Our roadmap is shown as follow.
 
-![image text](\image\Roadmap.jpg)
+![image text](image/Roadmap.jpg)
 
 As mentioned in the Motivation part, we need a customized FPGA board or grid, only containing basic tiles, to evaluate routes or segments through max frequency calculation done by VPR. To precisely get expected results, 3 files are fed to VPR, rr graph, architecture and circuits design. The first two files are called Device Model, describing details needed for a FPGA. Circuits design act as a benchmark. To be simple, we evaluate the speed(Max Frequency) of various device models with the same circuits.
 
@@ -82,7 +82,7 @@ RR Graph are generated through 3 phase:
 
 Further details of phase 3 are shown. Each CLB connects to other CLBs in a defined manner to assembly a CLB grid. Then, we add I/O ports around this grid and get a customized FPGA board. 
 
-![image text](\image\rough_idea.jpg)
+![image text](image/rough_idea.jpg)
 
 Architecture generation is much easier than that of rr graph because formats of elements are fixed and strict. Following the same idea, we dig out a piece of contents of CLB and assembly them according to the sized of our grid using script3. Note that Project X-Ray consists of rr graph and architecture of Xilinx 7-Series FPGA. That's the source of our project.
 
@@ -118,7 +118,7 @@ Apart from rr_graph, the following architecture file can be found in `/home/myz1
 
 If you read carefully, you must be confused about the difference of XC7A35T and XC7A50T: Why we compile a project for XC7A35T but files of XC7A50T are used during this procedure.  Based on the knowledge we know and observation, XC7A35T and XC7A50T use the same architecture and routing resource graph but XC7A35T only implements a part of design of XC7A50T. Actually, there is no architecture or rr graph file for XC7A35T. The screenshots also prove the similarity of both designs. 
 
-![image text](\image\Xilinx_FPGA_Type.jpg)
+![image text](image/Xilinx_FPGA_Type.jpg)
 
 ### Grid Visualizer
 
@@ -156,11 +156,11 @@ An obvious difference is the direction.
 
 - In VPR, South is y-positive and East is x-positive
 
-![image text](\image\Direction_Difference.jpg)
+![image text](image/Direction_Difference.jpg)
 
 Consequently, coordinates are different in two systems. You can compare two pdf files from grid visualizer to get a clear understanding.
 
-![image text](\image\Grid_Selection_For_Comparision.jpg)
+![image text](image/Grid_Selection_For_Comparision.jpg)
 
 ### Horizontal Shift
 
@@ -168,11 +168,11 @@ Except for the direction change, VPR shifts the system horizontally and vertical
 
 An extra empty column on the left side, caused by VPR. VPR doesn’t have channels right or above tiles on the right most / left most edge. To get these channels, VPR pads the left most / right most edges with EMPTY tiles. Check this [web](https://symbiflow.readthedocs.io/en/latest/symbiflow-arch-defs/docs/source/development/vtr_notes.html) for details.
 
-![image text](\image\Empty_Tile.jpg)
+![image text](image/Empty_Tile.jpg)
 
 Due to this design, all elements in the grid have to shift left 1 unit.
 
-![image text](\image\Horizontal_Shift.jpg)
+![image text](image/Horizontal_Shift.jpg)
 
 The above shows that VPR shifts all blocks left 1 unit. INT_L and INT_R represent switches located around the CLB. Failing to recognize INT blocks, VPR tag them with EMPTY block.
 
@@ -180,7 +180,7 @@ The above shows that VPR shifts all blocks left 1 unit. INT_L and INT_R represen
 
 Condition of vertical shift is more complex. Multiple empty tile rows at 0th , 52nd , 105th , 158th. Left column is Symbiflow coordinate system and the right is VPR coordinate system. Those moves can be proven in the previous pdf files.
 
-![image text](\image\Vertical_Shift.jpg)
+![image text](image/Vertical_Shift.jpg)
 
 Possible Reasons of shifts:
 
@@ -201,7 +201,7 @@ The left graph shows statistic results from the paper, counting the number of se
 
 Because we've not known how stub is recorded in rr graph, only segments are counted in our script.
 
-![image text](\image\Cardinal_Segment_Exploration.jpg)
+![image text](image/Cardinal_Segment_Exploration.jpg)
 
 ### Non-cardinal Segments
 
@@ -209,11 +209,11 @@ The same process is done in non-cardinal segments, but we separate them into mid
 
 Different from our expectation, the shape of mid-range wire is not like `turn left` or `turn right` traffic signs, but a `T`. Additionally, the number of North segments including NW and SW doubles. 
 
-![image text](\image\Non_Cardinal_Mid_Segment_Exploration.jpg)
+![image text](image/Non_Cardinal_Mid_Segment_Exploration.jpg)
 
 Short-range has the same issue.
 
-![image text](\image\Non_Cardinal_Short_Segment_Exploration.jpg)
+![image text](image/Non_Cardinal_Short_Segment_Exploration.jpg)
 
 Possible reason:
 
@@ -223,7 +223,7 @@ Possible reason:
 
 The left hotmap is from the above paper. We did a familiar research on XC7A50T. Note that many issues should be handled in the right hotmap, including incorrect counting and strange 0 areas.
 
-![image text](\image\Short2Mid_Adjacency_Analysis.jpg)
+![image text](image/Short2Mid_Adjacency_Analysis.jpg)
 
 # To-DO List
 
