@@ -10,7 +10,6 @@
   - [Prerequisites](#prerequisites)
     - [Architecture and Routing Graph](#architecture-and-routing-graph)
     - [Grid Visualizer](#grid-visualizer)
-
   - [Coordinate System Difference](#coordinate-system-difference)
     - [Direction Difference](#direction-difference)
     - [Horizontal Shift](#horizontal-shift)
