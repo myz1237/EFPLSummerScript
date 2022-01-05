@@ -44,7 +44,7 @@ Apart from Symbiflow, VPR, one of tools in Symbiflow, is also used in our projec
 
 Since we have those powerful tools, you may wonder how to implement a design in a given FPGA board. That's the job of Project X-Ray. Project X-Ray is part of works on FPGA cracking. The following graph introduces its basic working flow. X-Ray utilize a test method from software development, called Fuzz Testing. A fuzzer database is created with tons of design and each design is implemented by commercial toolchains, like Vivado. Through comparing tiny differences among bitstreams, we can infer functionalities of part of configure profiles. Executing this loop again and again, we can describe the architecture and routing graph of a specific FPGA board. After that, these results are integrated with VPR and works for placing and routing in Symbiflow. In this way, running bitstreams from Symbiflow in commercial FPGA is possible.
 
-![image text](\image\Project_Xray_Flow.jpg)
+![image text](image\Project_Xray_Flow.jpg)
 
 Since you get familiar with those tools, let's talk about our target, Xilinx 7-Series FPGA. Although 7-Series FPGA is not the latest product, its design and optimization are worth to learn and mimic. 
 
